@@ -1,0 +1,44 @@
+version: "1.0"
+
+services:
+  mysql-service:
+    image: mysql
+    hostname: mysql_hostname
+    restart: always
+    container_name: mysql-container-2
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=mysql-transfer-db
+    ports:
+      - "8089:3306"
+    networks:
+      custom-network:
+    volumes:
+      - db:/var/lib/mysql
+
+  adminer_ui_for_db:
+    image: adminer
+    restart: always
+    container_name: adminer-container-2
+    depends_on:
+      - mysql-service
+    ports:
+      - "8093:8080"
+    networks:
+      custom-network:
+
+  spring-register-customer-app:
+    networks:
+      custom-network:
+    image: register-customer-app-image
+    container_name: register-customer-app-container
+    ports:
+      - "8087:8083"
+    environment:
+      - DB_HOST=mysql-container-2
+      - DB_PORT=3306
+volumes:
+  db:
+
+networks:
+  custom-network:

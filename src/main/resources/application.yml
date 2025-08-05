@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: register-customer
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+  datasource:
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:8089}/mysql-transfer-db
+    username: root
+    password: password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+server:
+  port: 8083
+secret:
+  key: RmRfZ296bGVpcm5fbmVfZGV5aXJfYmFzYV9kdXN1cmVtX25peWVfY2FzZGlyaXJzYW5fZGlsaW5sZV9tZW5pX1Nh
+services:
+  akart:
+    url: http://localhost:8082/v1/api
+    username: Saida
+    password: password123
